@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="~/css/style.css">
+    <title>Dojo Dachi</title>
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script type='text/javascript'>
+        $(document).ready(function()
+        {
+            $("#Feed").click(function()
+            {
+                $.get("feed", function(results)
+                {
+                    if(results.status == "winner")
+                    {
+                        $("#fullness").text(results.fullness);
+                        $("#happiness").text(results.happiness);
+                        $("#energy").text(results.energy);
+                        $("#action").text(results.message);
+                        $("#buttons").html("<a href='restart'><button>Restart?</button></a>");
+                        $("#pic").attr('src', 'images/velour.gif');
+                    }
+                    $("#fullness").text(results.fullness);
+                    $("#meals").text(results.meals);
+                    $("#action").text(results.message);
+                });
+            });
+            $("#Slay").click(function()
+            {
+                $.get("slay", function(results)
+                {
+                    if(results.status == "winner")
+                    {
+                        $("#fullness").text(results.fullness);
+                        $("#happiness").text(results.happiness);
+                        $("#energy").text(results.energy);
+                        $("#action").text(results.message);
+                        $("#buttons").html("<a href='restart'><button>Restart?</button></a>");
+                        $("#pic").attr('src', 'images/velour.gif');
+                    }
+                    $("#happiness").text(results.happiness);
+                    $("#energy").text(results.energy);
+                    $("#action").text(results.message);
+                });
+            });
+            $("#Werq").click(function()
+            {
+                $.get("werq", function(results)
+                {
+                    $("#meals").text(results.meals);
+                    $("#energy").text(results.energy);
+                    $("#action").text(results.message);
+                });
+            });
+            $("#Sleep").click(function()
+            {
+                $.get("sleep", function(results)
+                {
+                    if(results.status == "dead")
+                    {
+                        $("#fullness").text(results.fullness);
+                        $("#happiness").text(results.happiness);
+                        $("#action").text(results.message);
+                        $("#buttons").html("<a href='restart'><button>Restart?</button></a>");
+                        $("#pic").attr('src', 'images/alyssa.gif');
+                    }
+                    if(results.status == "winner")
+                    {
+                        $("#fullness").text(results.fullness);
+                        $("#happiness").text(results.happiness);
+                        $("#energy").text(results.energy);
+                        $("#action").text(results.message);
+                        $("#buttons").html("<a href='restart'><button>Restart?</button></a>");
+                        $("#pic").attr('src', 'images/velour.gif');
+                    }
+                    $("#fullness").text(results.fullness);
+                    $("#happiness").text(results.happiness);
+                    $("#energy").text(results.energy);
+                    $("#action").text(results.message);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="content">
+            <p>Fullness: <span id="fullness">@ViewBag.Full</span></p>
+            <p>Happiness: <span id="happiness">@ViewBag.Happy</span></p>
+            <p>Energy: <span id="energy">@ViewBag.Energy</span></p>
+            <p>Meals: <span id="meals">@ViewBag.Meals</span></p>
+        </div>
+        <div class="content">
+            <h1>Welcome to the Drag Race Game Queens!!</h1>
+            <img id="pic" src="~/images/sas1.gif" alt="DojoDachi">
+            <span id="action">Welcome! Your new Drag queen is ready to slay!</span>
+        </div>
+        <div id="buttons">
+            @{
+                if(ViewBag.Status == "alive")
+                {
+                    <button id="Feed" type="submit">Feed</button>
+                    <button id="Slay" type="submit">Slay</button>
+                    <button id="Werq" type="submit">Werq</button>
+                    <button id="Sleep" type="submit">Sleep</button>
+                }
+            }
+        </div>
+    </div>
+    <div id="instructions">
+        <h2>Instructions</h2>
+        <ol>
+            <li>If fullness, happiness, and energy are all raised to 100 or more, you win!</li>
+            <li>If fullness or happiness ever drop to 0, you lose.</li>
+            <li>Feeding your Drag queen costs 1 meal and gains a random amount of fullness between 5 and 10 (you cannot feed your Drag queen if you do not have meals).</li>
+            <li>Playing with your Drag queen costs 5 energy and gains a random amount of happiness between 5 and 10.</li>
+            <li>Every time you play with or feed your Drag queen there should be a 25% chance that it won't like it. Energy or meals will still decrease, but happiness and fullness won't change.</li>
+            <li>Working costs 5 energy and earns between 1 and 3 meals.</li>
+            <li>Sleeping earns 15 energy and decreases fullness and happiness each by 5.</li>
+        </ol>
+        <h2>Good Luck!</h2>
+    </div>
+</body>
+</html>
